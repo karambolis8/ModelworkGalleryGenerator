@@ -17,10 +17,22 @@ namespace ModelworkGalleryGenerator
 
             // dodatkowe statystyki - top 10 modelarzy i producentów w podziale na skale
 
-            var generators = lines
-                .GroupBy(l => l.Scale)
+            var scales = lines
+                .GroupBy(l => l.Scale);
+
+            var generators = scales
                 .Select(g => new ScaleFilterStatistic(g.Key))
                 .ToList<IStatisticGenerator>();
+
+            var authorsWithScale = scales
+                .Select(g => new TopTenAuthorsStatistic(g.Key))
+                .ToList<IStatisticGenerator>();
+            generators.AddRange(authorsWithScale);
+
+            var producersWithScale = scales
+                .Select(g => new TopTenProducersStatistic(g.Key))
+                .ToList<IStatisticGenerator>();
+            generators.AddRange(producersWithScale);
 
             generators.Add(new ScaleCounterStatistic());
             generators.Add(new TopTenAuthorsStatistic());
