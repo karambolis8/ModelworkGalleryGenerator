@@ -26,10 +26,10 @@ namespace ModelworkGalleryGenerator.Statistics
             list.Add(string.Format("[size=150][b]Skala 1:{0}[/b][/size]", this._scale));
 
             foreach(var entry in galleryEntries
-                .Where(e => e.Scale == this._scale)
+                .Where(e => e.Scales.Contains(this._scale))
                 .OrderBy(e => e.Model))
             {
-                list.Add(string.Format("[url={0}][b]{1}[/b] {2} ({3})[/url]", entry.URL, entry.Model, entry.Author, entry.Producer));
+                list.Add(string.Format("[url={0}][b]{1}[/b] {2} ({3})[/url]", entry.URL, entry.Model, entry.Author, string.Join(", ", entry.Producers)));
             }
 
             return list;

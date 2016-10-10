@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.IO;
+using System.Text;
 
 namespace ModelworkGalleryGenerator
 {
@@ -30,16 +30,19 @@ namespace ModelworkGalleryGenerator
                 while (!reader.EndOfStream)
                 {
                     var line = reader.ReadLine();
+
+                    line = RemoveUnallowedChars(line);
+
                     var values = line.Split(this._columnSeparator);
 
                     if (values.Length < 8)
                         throw new Exception("invalid row format");
 
                     var scaleStr = values[6];
-                    var index = scaleStr.IndexOfAny(new []{',', '.', ':', '/'});
-                    if (index > 0)
-                        scaleStr = scaleStr.Substring(index + 1);
-                    var scale = Int32.Parse(scaleStr);
+                    var scales = ParseScale(scaleStr);
+
+                    var producerStr = values[7];
+                    var producers = ParseProducers(producerStr);
 
                     var entry = new GalleryEntry() 
                     { 
@@ -49,8 +52,8 @@ namespace ModelworkGalleryGenerator
                         Title = values[3],
                         Author = values[4],
                         Model = values[5],
-                        Scale = scale,
-                        Producer = values[7]
+                        Scales = scales,
+                        Producers = producers
                     };
 
                     list.Add(entry);
@@ -58,6 +61,45 @@ namespace ModelworkGalleryGenerator
             }
 
             return list;
+        }
+
+        private int[] ParseScale(string scaleStr)
+        {
+            var scales = scaleStr.Split('+');
+            var result = new List<int>(scales.Length);
+
+            foreach (var s in scales)
+            {
+                var scale = s.Trim();
+                var index = scale.IndexOfAny(new[] { ',', '.', ':', '/' });
+                if (index > 0)
+                    scale = scale.Substring(index + 1);
+                result.Add(Int32.Parse(scale));
+            }
+
+            return result.ToArray();
+        }
+
+        private string[] ParseProducers(string producerStr)
+        {
+            if (string.IsNullOrEmpty(producerStr) || producerStr.Contains("?"))
+                return new[] {"brak"};
+
+            var producers = producerStr.Split('+');
+            var result = new List<string>(producers.Length);
+            result.AddRange(producers.Select(p => p.Trim()));
+            return result.ToArray();
+        }
+
+        private string RemoveUnallowedChars(string lineOrg)
+        {
+            var sb = new StringBuilder(lineOrg);
+            sb.Replace("&gt;", string.Empty);
+            sb.Replace("&lt;", string.Empty);
+            sb.Replace("&amp;", string.Empty);
+            sb.Replace("&quot;", string.Empty);
+            sb.Replace(";)", string.Empty);
+            return sb.ToString();
         }
     }
 }

@@ -4,6 +4,6 @@
     <StartArguments>"C:\modelwork_galerie\galerie_lotnicze.csv"</StartArguments>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
-    <StartArguments>"C:\modelwork_galerie\galerie_lotnicze.csv"</StartArguments>
+    <StartArguments>"C:\modelwork_galerie\galerie_cywilne.csv"</StartArguments>
   </PropertyGroup>
 </Project>

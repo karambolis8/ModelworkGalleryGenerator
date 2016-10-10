@@ -39,15 +39,18 @@ namespace ModelworkGalleryGenerator.Statistics
 
             Func<GalleryEntry, bool> optionalScaleFilter;
             if (this._scale.HasValue)
-                optionalScaleFilter = g => g.Scale == this._scale.Value;
+                optionalScaleFilter = g => g.Scales.Contains(this._scale.Value);
             else
                 optionalScaleFilter = _ => true;
 
-            foreach (var group in galleryEntries
+            var col = galleryEntries
                 .Where(g => optionalScaleFilter(g))
-                .GroupBy(e => e.Producer)
+                .SelectMany(g => g.Producers)
+                .GroupBy(e => e)
                 .OrderByDescending(g => g.Count())
-                .Take(10))
+                .Take(10);
+
+            foreach (var group in col)
             {
                 list.Add(string.Format("[b]{0} - [/b]{1}", group.Key, group.Count()));
             }

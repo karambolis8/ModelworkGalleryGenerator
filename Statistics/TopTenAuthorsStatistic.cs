@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace ModelworkGalleryGenerator.Statistics
 {
@@ -40,7 +39,7 @@ namespace ModelworkGalleryGenerator.Statistics
 
             Func<GalleryEntry, bool> optionalScaleFilter;
             if (this._scale.HasValue)
-                optionalScaleFilter = g => g.Scale == this._scale.Value;
+                optionalScaleFilter = g => g.Scales.Contains(this._scale.Value);
             else
                 optionalScaleFilter = _ => true;
 

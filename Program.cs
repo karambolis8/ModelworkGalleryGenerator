@@ -18,7 +18,8 @@ namespace ModelworkGalleryGenerator
             // dodatkowe statystyki - top 10 modelarzy i producentów w podziale na skale
 
             var scales = lines
-                .GroupBy(l => l.Scale);
+                .SelectMany(l => l.Scales)
+                .GroupBy(l => l);
 
             var generators = scales
                 .Select(g => new ScaleFilterStatistic(g.Key))

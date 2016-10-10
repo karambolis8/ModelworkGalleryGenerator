@@ -13,7 +13,7 @@ namespace ModelworkGalleryGenerator
         public string Title { get; set; }
         public string Author { get; set; }
         public string Model { get; set; }
-        public int Scale { get; set; }
-        public string Producer { get; set; }
+        public int[] Scales { get; set; }
+        public string[] Producers { get; set; }
     }
 }
