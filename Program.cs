@@ -23,11 +23,13 @@ namespace ModelworkGalleryGenerator
                 .ToList<IStatisticGenerator>();
 
             var authorsWithScale = scales
+                .Where(s => s.Count() >= 10)
                 .Select(g => new TopTenAuthorsStatistic(g.Key))
                 .ToList<IStatisticGenerator>();
             generators.AddRange(authorsWithScale);
 
             var producersWithScale = scales
+                .Where(s => s.Count() >= 10)
                 .Select(g => new TopTenProducersStatistic(g.Key))
                 .ToList<IStatisticGenerator>();
             generators.AddRange(producersWithScale);
