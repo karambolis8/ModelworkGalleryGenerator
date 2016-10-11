@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace ModelworkGalleryGenerator.Statistics
 {
@@ -23,7 +21,8 @@ namespace ModelworkGalleryGenerator.Statistics
         {
             var list = new List<string>();
 
-            list.Add(string.Format("[size=150][b]Skala 1:{0}[/b][/size]", this._scale));
+            var formatStr = this._scale == "nieznana" ? "[size=150][b]Skala {0}[/b][/size]" : "[size=150][b]Skala 1:{0}[/b][/size]";
+            list.Add(string.Format(formatStr, this._scale));
 
             foreach(var entry in galleryEntries
                 .Where(e => e.Scales.Contains(this._scale))
