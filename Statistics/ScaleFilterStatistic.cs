@@ -17,7 +17,7 @@ namespace ModelworkGalleryGenerator.Statistics
             this._scale = scale;
         }
 
-        public IList<string> GenerateStatisticsRows(IList<GalleryEntry> galleryEntries, string updateDate)
+        public IList<string> GenerateStatisticsRows(IList<GalleryEntry> galleryEntries)
         {
             var scaleEnties = galleryEntries
                 .Where(e => e.Scales.Contains(this._scale))
@@ -44,9 +44,6 @@ namespace ModelworkGalleryGenerator.Statistics
             {
                 list.Add(string.Format("[url={0}][b]{1}[/b] {2} ({3})[/url]", entry.URL, entry.Model, entry.Author, string.Join(", ", entry.Producers)));
             }
-
-            list.Add(string.Empty);
-            list.Add(string.Format("[color=#008000]Stan na {0}[/color]", updateDate));
 
             return list;
         }

@@ -28,7 +28,7 @@ namespace ModelworkGalleryGenerator.Statistics
             }
         }
 
-        public IList<string> GenerateStatisticsRows(IList<GalleryEntry> galleryEntries, string updateDate)
+        public IList<string> GenerateStatisticsRows(IList<GalleryEntry> galleryEntries)
         {
             var list = new List<string>();
 
@@ -59,9 +59,6 @@ namespace ModelworkGalleryGenerator.Statistics
             {
                 list.Add(string.Format("[b]{0} - [/b]{1}", group.Key, group.Count()));
             }
-
-            list.Add(string.Empty);
-            list.Add(string.Format("[color=#008000]Stan na {0}[/color]", updateDate));
 
             return list;
         }

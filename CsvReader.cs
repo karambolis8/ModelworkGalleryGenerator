@@ -64,10 +64,10 @@ namespace ModelworkGalleryGenerator
                     { 
                         LastPostDate = DateTime.Parse(values[0]),
                         CreateData = DateTime.Parse(values[1]),
-                        URL = values[2],
-                        Title = values[3],
-                        Author = values[4],
-                        Model = values[5],
+                        URL = values[2].Trim(),
+                        Title = values[3].Trim(),
+                        Author = values[4].Trim(),
+                        Model = values[5].Trim(),
                         Scales = scales,
                         Producers = producers
                     };
