@@ -23,7 +23,7 @@ namespace ModelworkGalleryGenerator.Statistics
             get
             {
                 if(this._scale != null)
-                    return string.Format("Top10AuthorsFor{0}", this._scale);
+                    return string.Format("Top10AuthorsFor_{0}", this._scale);
                 return "Top10Authors";
             }
         }
@@ -32,10 +32,18 @@ namespace ModelworkGalleryGenerator.Statistics
         {
             var list = new List<string>();
 
-            if(this._scale != null)
-                list.Add(string.Format("[size=150][b]Top 10 modelarzy wg. ilości galerii dla skali 1:{0}[/b][/size]", this._scale));
+            if (this._scale != null)
+            {
+                var formatStr = this._scale == "nieznana"
+                    ? "[size=150][b]Top 10 modelarzy wg. ilości galerii dla skali {0}[/b][/size]"
+                    : "[size=150][b]Top 10 modelarzy wg. ilości galerii dla skali 1:{0}[/b][/size]";
+
+                list.Add(string.Format(formatStr, this._scale));
+            }
             else
+            {
                 list.Add("[size=150][b]Top 10 modelarzy wg. ilości galerii[/b][/size]");
+            }
 
             Func<GalleryEntry, bool> optionalScaleFilter;
             if (this._scale != null)

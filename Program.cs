@@ -12,8 +12,6 @@ namespace ModelworkGalleryGenerator
             var reader = new CsvReader(inputFile, ';');
             var lines = reader.ReadLines(true);
 
-            // dodatkowe statystyki - top 10 modelarzy i producentów w podziale na skale
-
             var scales = lines
                 .SelectMany(l => l.Scales)
                 .GroupBy(l => l);
