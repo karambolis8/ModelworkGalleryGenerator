@@ -10,7 +10,7 @@ namespace ModelworkGalleryGenerator.Statistics
             get { return "ScaleCounter"; }
         }
 
-        public IList<string> GenerateStatisticsRows(IList<GalleryEntry> galleryEntries)
+        public IList<string> GenerateStatisticsRows(IList<GalleryEntry> galleryEntries, string updateDate)
         {
             var list = new List<string>();
 
@@ -24,6 +24,9 @@ namespace ModelworkGalleryGenerator.Statistics
                 var formatStr = group.Key == "nieznana" ? "[b]{0} - [/b]{1}" : "[b]1:{0} - [/b]{1}";
                 list.Add(string.Format(formatStr, group.Key, group.Count()));
             }
+
+            list.Add(string.Empty);
+            list.Add(string.Format("[color=#008000]Stan na {0}[/color]", updateDate));
 
             return list;
         }

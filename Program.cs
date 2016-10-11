@@ -8,6 +8,7 @@ namespace ModelworkGalleryGenerator
         static void Main(string[] args)
         {
             var inputFile = args[0];
+            var updateDate = args[1];
 
             var reader = new CsvReader(inputFile, ';');
             var lines = reader.ReadLines(true);
@@ -36,7 +37,7 @@ namespace ModelworkGalleryGenerator
             generators.Add(new TopTenAuthorsStatistic());
             generators.Add(new TopTenProducersStatistic());
 
-            StatisticsWriter.WriteStatistics(@"C:\modelwork_galerie", lines, generators);
+            StatisticsWriter.WriteStatistics(@"C:\modelwork_galerie", lines, generators, updateDate);
         }
     }
 }

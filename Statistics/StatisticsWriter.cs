@@ -6,11 +6,11 @@ namespace ModelworkGalleryGenerator.Statistics
 {
     static class StatisticsWriter
     {
-        public static void WriteStatistics(string outputDir, IList<GalleryEntry> galleryEntries, IEnumerable<IStatisticGenerator> generators)
+        public static void WriteStatistics(string outputDir, IList<GalleryEntry> galleryEntries, IEnumerable<IStatisticGenerator> generators, string updateDate)
         {
             foreach (var generator in generators)
             {
-                var statisticRows = generator.GenerateStatisticsRows(galleryEntries);
+                var statisticRows = generator.GenerateStatisticsRows(galleryEntries, updateDate);
                 File.WriteAllLines(Path.Combine(outputDir, generator.StatisticName) + ".txt", statisticRows.ToArray());
             }
         }

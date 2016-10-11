@@ -6,6 +6,6 @@ namespace ModelworkGalleryGenerator.Statistics
     {
         string StatisticName { get; }
 
-        IList<string> GenerateStatisticsRows(IList<GalleryEntry> galleryEntries);
+        IList<string> GenerateStatisticsRows(IList<GalleryEntry> galleryEntries, string updateDate);
     }
 }
