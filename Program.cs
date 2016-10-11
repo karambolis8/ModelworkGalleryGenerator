@@ -17,27 +17,25 @@ namespace ModelworkGalleryGenerator
                 .SelectMany(l => l.Scales)
                 .GroupBy(l => l);
 
-            //var generators = scales
-            //    .Select(g => new ScaleFilterStatistic(g.Key))
-            //    .ToList<IStatisticGenerator>();
+            var generators = scales
+                .Select(g => new ScaleFilterStatistic(g.Key))
+                .ToList<IStatisticGenerator>();
 
-            var generators = new[] {new ScaleFilterStatistic("35")}.ToList<IStatisticGenerator>();
+            var authorsWithScale = scales
+                .Where(s => s.Count() >= 10)
+                .Select(g => new TopTenAuthorsStatistic(g.Key))
+                .ToList<IStatisticGenerator>();
+            generators.AddRange(authorsWithScale);
 
-            //var authorsWithScale = scales
-            //    .Where(s => s.Count() >= 10)
-            //    .Select(g => new TopTenAuthorsStatistic(g.Key))
-            //    .ToList<IStatisticGenerator>();
-            //generators.AddRange(authorsWithScale);
-
-            //var producersWithScale = scales
-            //    .Where(s => s.Count() >= 10)
-            //    .Select(g => new TopTenProducersStatistic(g.Key))
-            //    .ToList<IStatisticGenerator>();
-            //generators.AddRange(producersWithScale);
+            var producersWithScale = scales
+                .Where(s => s.Count() >= 10)
+                .Select(g => new TopTenProducersStatistic(g.Key))
+                .ToList<IStatisticGenerator>();
+            generators.AddRange(producersWithScale);
 
             generators.Add(new ScaleCounterStatistic());
-            //generators.Add(new TopTenAuthorsStatistic());
-            //generators.Add(new TopTenProducersStatistic());
+            generators.Add(new TopTenAuthorsStatistic());
+            generators.Add(new TopTenProducersStatistic());
 
             StatisticsWriter.WriteStatistics(@"C:\modelwork_galerie", lines, generators, updateDate);
         }
