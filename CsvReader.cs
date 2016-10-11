@@ -13,6 +13,7 @@ namespace ModelworkGalleryGenerator
         private static string[] _noProducerStrings = ConfigurationManager.AppSettings["NoProducersStrings"].Split('|');
         private static string[] _scratchStrings = ConfigurationManager.AppSettings["ScratchStrings"].Split('|');
         private static string[] _unallowedMarkup = ConfigurationManager.AppSettings["UnallowedMarkup"].Split('|');
+        private static string[] _unknownScaleStrings = ConfigurationManager.AppSettings["UnknownScaleStrings"].Split('|');
 
         private readonly string _fileName;
 
@@ -44,7 +45,7 @@ namespace ModelworkGalleryGenerator
                     if (values.Length < 8)
                         throw new Exception("invalid row format");
 
-                    int[] scales;
+                    string[] scales;
                     try
                     {
                         var scaleStr = values[6];
@@ -77,10 +78,13 @@ namespace ModelworkGalleryGenerator
             return list;
         }
 
-        private int[] ParseScale(string scaleStr)
+        private string[] ParseScale(string scaleStr)
         {
+            if (string.IsNullOrEmpty(scaleStr) || _unknownScaleStrings.Contains(scaleStr.ToLower()))
+                return new[] { "nieznana" };
+
             var scales = scaleStr.Split('+');
-            var result = new List<int>(scales.Length);
+            var result = new List<string>(scales.Length);
 
             foreach (var s in scales)
             {
@@ -88,7 +92,7 @@ namespace ModelworkGalleryGenerator
                 var index = IndexOfAny(scale, _scaleDividers);
                 if (index > 0)
                     scale = scale.Substring(index + 1);
-                result.Add(Int32.Parse(scale));
+                result.Add(scale);
             }
 
             return result.ToArray();

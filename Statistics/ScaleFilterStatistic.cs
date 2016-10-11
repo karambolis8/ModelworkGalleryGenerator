@@ -7,14 +7,14 @@ namespace ModelworkGalleryGenerator.Statistics
 {
     class ScaleFilterStatistic : IStatisticGenerator
     {
-        private int _scale;
+        private string _scale;
 
         public string StatisticName
         {
             get { return "ScaleStatistics_" + _scale; }
         }
 
-        public ScaleFilterStatistic(int scale)
+        public ScaleFilterStatistic(string scale)
         {
             this._scale = scale;
         }

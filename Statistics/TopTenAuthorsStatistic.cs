@@ -6,14 +6,14 @@ namespace ModelworkGalleryGenerator.Statistics
 {
     class TopTenAuthorsStatistic : IStatisticGenerator
     {
-        private int? _scale;
+        private string _scale;
 
         public TopTenAuthorsStatistic()
         {
             this._scale = null;
         }
 
-        public TopTenAuthorsStatistic(int scale)
+        public TopTenAuthorsStatistic(string scale)
         {
             this._scale = scale;
         }
@@ -22,8 +22,8 @@ namespace ModelworkGalleryGenerator.Statistics
         {
             get
             {
-                if(this._scale.HasValue)
-                    return string.Format("Top10AuthorsFor{0}", this._scale.Value);
+                if(this._scale != null)
+                    return string.Format("Top10AuthorsFor{0}", this._scale);
                 return "Top10Authors";
             }
         }
@@ -32,14 +32,14 @@ namespace ModelworkGalleryGenerator.Statistics
         {
             var list = new List<string>();
 
-            if(this._scale.HasValue)
-                list.Add(string.Format("[size=150][b]Top 10 modelarzy wg. ilości galerii dla skali 1:{0}[/b][/size]", this._scale.Value));
+            if(this._scale != null)
+                list.Add(string.Format("[size=150][b]Top 10 modelarzy wg. ilości galerii dla skali 1:{0}[/b][/size]", this._scale));
             else
                 list.Add("[size=150][b]Top 10 modelarzy wg. ilości galerii[/b][/size]");
 
             Func<GalleryEntry, bool> optionalScaleFilter;
-            if (this._scale.HasValue)
-                optionalScaleFilter = g => g.Scales.Contains(this._scale.Value);
+            if (this._scale != null)
+                optionalScaleFilter = g => g.Scales.Contains(this._scale);
             else
                 optionalScaleFilter = _ => true;
 

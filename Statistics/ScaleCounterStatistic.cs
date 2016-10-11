@@ -21,7 +21,8 @@ namespace ModelworkGalleryGenerator.Statistics
                 .GroupBy(e => e)
                 .OrderByDescending(g => g.Count()))
             {
-                list.Add(string.Format("[b]1:{0} - [/b]{1}", group.Key, group.Count()));
+                var formatStr = group.Key == "nieznana" ? "[b]{0} - [/b]{1}" : "[b]1:{0} - [/b]{1}";
+                list.Add(string.Format(formatStr, group.Key, group.Count()));
             }
 
             return list;
