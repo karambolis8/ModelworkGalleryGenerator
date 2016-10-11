@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using ModelworkGalleryGenerator.Statistics;
+using System.Configuration;
 
 namespace ModelworkGalleryGenerator
 {
@@ -37,7 +38,7 @@ namespace ModelworkGalleryGenerator
             generators.Add(new TopTenAuthorsStatistic());
             generators.Add(new TopTenProducersStatistic());
 
-            StatisticsWriter.WriteStatistics(@"C:\modelwork_galerie", lines, generators, updateDate);
+            StatisticsWriter.WriteStatistics(ConfigurationManager.AppSettings["OutputDir"], lines, generators, updateDate);
         }
     }
 }
